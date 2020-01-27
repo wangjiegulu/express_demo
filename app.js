@@ -12,16 +12,26 @@ app.set('view engine', 'pug');
 // ############# View Template Engine END ############# //
 
 
-// ############# logger START ############# //
-var logger = require('morgan');
-app.use(logger('dev'));
-// ############# logger END ############# //
-
-
 // ############# Cookie START ############# //
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 // ############# Cookie END ############# //
+
+
+// ############# 自定义拦截器 START ############# //
+// 中间件：拦截器
+app.use((req, res, next)=>{
+  console.log("[intercept]req: ", req.url)
+  console.log("[intercept]req.cookies: ", req.cookies)
+  next()
+})
+// ############# 自定义拦截器 END ############# //
+
+
+// ############# logger START ############# //
+var logger = require('morgan');
+app.use(logger('dev'));
+// ############# logger END ############# //
 
 
 // ############# Static START ############# //
@@ -77,15 +87,5 @@ app.use(function(err, req, res, next) {
 // 全局异常捕获
 process.on('unhandledRejection', rej => console.warn('全局捕获Rejection', rej));
 // ############# 错误处理 END ############# //
-
-
-// ############# 自定义拦截器 START ############# //
-// 中间件：拦截器
-app.use((req, res, next)=>{
-  console.log("[intercept]req: ", req.url)
-  console.log("[intercept]req.cookies: ", req.cookies)
-  next()
-})
-// ############# 自定义拦截器 END ############# //
 
 module.exports = app;
