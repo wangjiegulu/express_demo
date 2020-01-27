@@ -3,9 +3,11 @@ var path = require('path');
 
 var app = express();
 
+let projectRootPath = __dirname
+
 // view engine setup
 // ############# View Template Engine START ############# //
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(projectRootPath, 'views'));
 app.set('view engine', 'pug');
 // ############# View Template Engine END ############# //
 
@@ -23,7 +25,7 @@ app.use(cookieParser());
 
 
 // ############# Static START ############# //
-app.use('/web', express.static(path.join(__dirname, 'public')));
+app.use('/web', express.static(path.join(projectRootPath, 'public')));
 // ############# Static END ############# //
 
 
@@ -41,7 +43,7 @@ let fileupload = require('express-fileupload')
 app.use(fileupload({
     limits: { fileSize: 50 * 1024 * 1024 },
     useTempFiles : true,
-    tempFileDir : `${__dirname}/files/tmp/`
+    tempFileDir : `${projectRootPath}/files/tmp/`
 }))
 // ############# Upload END ############# //
 
